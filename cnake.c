@@ -34,7 +34,7 @@ static void draw() {
                 printf("%c", border);
             } else {
                 if (i == snake.y && j == snake.x) {
-                    printf("%c", snake.head_char);
+                    printf("\x1B[34m%c\x1B[0m", snake.head_char);
                 } else if (i == fruit_y && j == fruit_x) {
                     printf("$");
                 } else {
