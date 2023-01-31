@@ -1,5 +1,5 @@
-#ifndef C_SNAKE_H
-#define C_SNAKE_H
+#ifndef C_CNAKE_H
+#define C_CNAKE_H
 
 #include "conio.h"
 #include "stdlib.h"
@@ -31,4 +31,4 @@ static void draw();
 static void input();
 static void logic();
 void start_game();
-#endif //C_SNAKE_H
+#endif //C_CNAKE_H
