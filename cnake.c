@@ -1,4 +1,4 @@
-#include "snake.h"
+#include "cnake.h"
 
 static void spawn_fruit() {
 //    fruit_x = time(0) % (WIDTH - 1) + 1;

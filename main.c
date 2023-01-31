@@ -1,4 +1,4 @@
-#include "snake.h"
+#include "cnake.h"
 
 int main() {
     start_game();
