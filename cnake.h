@@ -17,6 +17,7 @@
 #define FRUIT '$'
 #define H_BORDER '-'
 #define V_BORDER '|'
+
 #define GREEN "\x1b[32m"
 #define BLUE  "\x1b[34m"
 #define CYAN  "\x1b[36m"
@@ -26,7 +27,8 @@ typedef struct {
     int x, y, tl;
     int xs[MAX], ys[MAX];
     char head_char;
-    enum {UP, DOWN, RIGHT, LEFT} direction;
+    char body;
+    enum {STOP = 0, UP, DOWN, RIGHT, LEFT} direction;
     } snake_struct;
 
 static snake_struct snake;

@@ -15,7 +15,8 @@ static void spawn_fruit() {
 
 static void setup() {
     snake.head_char = '^';
-    snake.direction = UP;
+    snake.direction = 1;
+    snake.body = 'o';
     for (int i = 0; i < MAX; ++i){
         snake.xs[i] = snake.ys[i] = -1;
     }
@@ -48,7 +49,7 @@ static void draw() {
                     int print = 0;
                     for (int k = 0; k < snake.tl; ++k) {
                         if (snake.xs[k] == j && snake.ys[k] == i) {
-                            printf("o");
+                            printf("%c", snake.body);
                             print = 1;
                         }
                     }
@@ -86,7 +87,9 @@ static void input() {
                 snake.head_char = '>';
                 break;
             case 'x':
-                game_over = 1;
+                snake.direction = STOP;
+                break;
+            default:
                 break;
         }
     }
@@ -95,7 +98,7 @@ static void logic() {
     if (snake.tl >= MAX) {
         system("cls");
         printf("You won!");
-        game_over = 1;
+        game_over = 2;
     }
     int prev_x = snake.xs[0];
     int prev_y = snake.ys[0];
@@ -123,6 +126,8 @@ static void logic() {
         case DOWN:
             ++snake.y;
             break;
+        case STOP:
+            break;
     }
     for (int i = 0; i < snake.tl; ++i) {
         if (snake.x == snake.xs[i] && snake.y == snake.ys[i]) {
@@ -145,10 +150,14 @@ void start_game() {
         input();
         logic();
     }
-
-    system("cls");
-    printf("Game over.\nYour score: %d\n",score);
-
+    if (game_over == 1) {
+        system("cls");
+        printf("Game over.\nYour score: %d\n", score);
+    }
+    int play;
     printf("Do you want to play again? (1 - default yes / 0 - no):\n");
-    
+    scanf("%d", &play);
+    if (play) {
+        start_game();
+    }
 }
