@@ -1,4 +1,4 @@
 cmake_minimum_required(VERSION 3.24)
-project(C C)
+project(Cnake)
 
-add_executable(C main.c cnake.h cnake.c)
+add_executable(Cnake main.c cnake.h cnake.c)
