@@ -122,6 +122,11 @@ static void logic() {
             ++snake.y;
             break;
     }
+    for (int i = 0; i < snake.tl; ++i) {
+        if (snake.x == snake.xs[i] && snake.y == snake.ys[i]) {
+            game_over = 1;
+        }
+    }
     if (snake.x >= WIDTH || snake.x < 0 || snake.y >= HEIGHT || snake.y < 0) {
         game_over = 1;
     }
