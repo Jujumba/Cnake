@@ -19,20 +19,24 @@ static void clear(int lines) {
     }
 }
 static void spawn_fruit() {
+    int in_snake = 0;
     do {
         fruit_x = rand() % (WIDTH - 1);
         fruit_y = rand() % (HEIGHT - 1);
-    } while (fruit_x <= 0 || fruit_y <= 0);
+        for (int i = 0; i < snake.tl; ++i) {
+            if (fruit_x == snake.xs[i] && fruit_y == snake.ys[i]) {
+                in_snake = 1;
+            }
+        }
+    } while (fruit_x <= 0 || fruit_y <= 0 || in_snake);
 
 }
 
 static void setup() {
+    system("cls");
     snake.head_char = '^';
     snake.direction = 1;
-    snake.body = 'o';
-    for (int i = 0; i < MAX; ++i){
-        snake.xs[i] = snake.ys[i] = -1;
-    }
+    snake.body = BODY;
     snake.tl = 0;
     score = 0;
     game_over = 0;
@@ -42,9 +46,9 @@ static void setup() {
 }
 
 static void draw() {
-    clear(WIDTH + 2);
-    printf("Score: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
+    clear(WIDTH + 4);
     printf("Press 'x' to quit\n");
+    printf("Score: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
     for (int i = 0; i < WIDTH; ++i) {
         printf("%s%c%s",CYAN, H_BORDER, RESET);
     }
@@ -169,4 +173,5 @@ void start_game() {
         system("cls");
         printf("Game over.\nYour score: %d\n", score);
     }
+
 }

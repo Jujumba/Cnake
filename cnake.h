@@ -1,13 +1,13 @@
 #ifndef C_CNAKE_H
 #define C_CNAKE_H
 
-#include "conio.h"
-#include "stdlib.h"
-#include "stdio.h"
+#include <conio.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
-#include "string.h"
+#include <string.h>
 #ifdef _WIN32
-#include "windows.h"
+#include <windows.h>
 #endif
 
 #define WIDTH 75
@@ -17,6 +17,7 @@
 #define FRUIT '$'
 #define H_BORDER '-'
 #define V_BORDER '|'
+#define BODY 'o'
 
 #define GREEN "\x1b[32m"
 #define BLUE  "\x1b[34m"
