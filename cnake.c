@@ -8,10 +8,12 @@ typedef struct {
     enum {STOP = 0, UP, DOWN, RIGHT, LEFT} direction;
 } s_snake;
 
+typedef struct {int x, y} s_fruit;
+
 static s_snake snake;
-static int fruit_x, fruit_y, game_over, score;
+static int game_over, score;
 
-
+static s_fruit fruit;
 
 static void clear(int lines) {
     for (int i = 0; i < lines; ++i) {
@@ -21,14 +23,14 @@ static void clear(int lines) {
 static void spawn_fruit() {
     int in_snake = 0;
     do {
-        fruit_x = rand() % (WIDTH - 1);
-        fruit_y = rand() % (HEIGHT - 1);
+        fruit.x = rand() % (WIDTH - 1);
+        fruit.y = rand() % (HEIGHT - 1);
         for (int i = 0; i < snake.tl; ++i) {
-            if (fruit_x == snake.xs[i] && fruit_y == snake.ys[i]) {
+            if (fruit.x == snake.xs[i] && fruit.y == snake.ys[i]) {
                 in_snake = 1;
             }
         }
-    } while (fruit_x <= 0 || fruit_y <= 0 || in_snake);
+    } while (fruit.x <= 0 || fruit.y <= 0 || in_snake);
 
 }
 
@@ -48,7 +50,7 @@ static void setup() {
 static void draw() {
     clear(WIDTH + 4);
     printf("Press 'x' to quit\n");
-    printf("Score: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
+    printf("Score: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit.x, fruit.y);
     for (int i = 0; i < WIDTH; ++i) {
         printf("%s%c%s",CYAN, H_BORDER, RESET);
     }
@@ -60,7 +62,7 @@ static void draw() {
             } else {
                 if (i == snake.y && j == snake.x) {
                     printf("%s%c%s",BLUE,snake.head_char, RESET);
-                } else if (i == fruit_y && j == fruit_x) {
+                } else if (i == fruit.y && j == fruit.x) {
                     printf("%s%c%s", GREEN, FRUIT, RESET);
                 } else {
                     int print = 0;
@@ -156,7 +158,7 @@ static void logic() {
     if (snake.x >= WIDTH || snake.x < 0 || snake.y >= HEIGHT || snake.y < 0) {
         game_over = 1;
     }
-    if (snake.x == fruit_x && snake.y == fruit_y) {
+    if (snake.x == fruit.x && snake.y == fruit.y) {
         ++snake.tl;
         ++score;
         spawn_fruit();
