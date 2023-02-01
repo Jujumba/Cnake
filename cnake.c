@@ -1,8 +1,11 @@
 #include "cnake.h"
 
+static void clear(int lines) {
+    for (int i = 0; i < lines; ++i) {
+        printf("\033[F");
+    }
+}
 static void spawn_fruit() {
-//    fruit_x = time(0) % (WIDTH - 1) + 1;
-//    fruit_y = time(0) % (HEIGHT - 1) + 1;
     fruit_x = rand() % (WIDTH - 1);
     fruit_y = rand() % (HEIGHT - 1);
 }
@@ -21,10 +24,9 @@ static void setup() {
 }
 
 static void draw() {
-    system("cls");
-
+    clear(WIDTH + 2);
     for (int i = 0; i < WIDTH; ++i) {
-        printf("%c", border);
+        wprintf(L"%c", border);
     }
 
     printf("\tScore: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
@@ -57,7 +59,6 @@ static void draw() {
     for (int i = 0; i < WIDTH; ++i) {
         printf("%c", border);
     }
-    Sleep(30);
 }
 
 static void input() {
@@ -79,6 +80,9 @@ static void input() {
                 dir = RIGHT;
                 snake.head_char = '>';
                 break;
+            case 'x':
+                game_over = 1;
+                break;
         }
     }
 }
@@ -94,12 +98,12 @@ static void logic() {
     snake.ys[0] = snake.y;
 
     for (int i = 1; i < snake.tl; ++i) {
-        int pprev_x = snake.xs[i];
-        int pprev_y = snake.ys[i];
+        int curr_x = snake.xs[i];
+        int curr_y = snake.ys[i];
         snake.xs[i] = prev_x;
         snake.ys[i] = prev_y;
-        prev_x = pprev_x;
-        prev_y = pprev_y;
+        prev_x = curr_x;
+        prev_y = curr_y;
     }
     switch (dir) {
         case LEFT:

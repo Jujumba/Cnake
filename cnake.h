@@ -12,8 +12,8 @@
 
 #define WIDTH 75
 #define HEIGHT 25
-#define MAX 100
-static char border = '#';
+#define MAX (WIDTH * HEIGHT)
+static char32_t border = u'#'; // ▓
 
 typedef struct {
     int x, y, tl;
@@ -30,5 +30,6 @@ static void setup();
 static void draw();
 static void input();
 static void logic();
+static void clear(int);
 void start_game();
 #endif //C_CNAKE_H
