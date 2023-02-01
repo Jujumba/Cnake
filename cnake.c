@@ -1,5 +1,18 @@
 #include "cnake.h"
 
+typedef struct {
+    int x, y, tl;
+    int xs[MAX], ys[MAX];
+    char head_char;
+    char body;
+    enum {STOP = 0, UP, DOWN, RIGHT, LEFT} direction;
+} s_snake;
+
+static s_snake snake;
+static int fruit_x, fruit_y, game_over, score;
+
+
+
 static void clear(int lines) {
     for (int i = 0; i < lines; ++i) {
         printf("\033[F");
@@ -30,16 +43,16 @@ static void setup() {
 
 static void draw() {
     clear(WIDTH + 2);
+    printf("Score: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
+    printf("Press 'x' to quit\n");
     for (int i = 0; i < WIDTH; ++i) {
         printf("%s%c%s",CYAN, H_BORDER, RESET);
     }
-
-    printf("\tScore: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
-
+    printf("\n");
     for (int i = 0; i < HEIGHT; ++i) {
         for (int j = 0; j < WIDTH; ++j) {
             if (j == 0 || j == WIDTH - 1) {
-                printf("%s%c%s",CYAN, V_BORDER, RESET);
+                printf("%s%c%s", CYAN, V_BORDER, RESET);
             } else {
                 if (i == snake.y && j == snake.x) {
                     printf("%s%c%s",BLUE,snake.head_char, RESET);
@@ -65,6 +78,7 @@ static void draw() {
     for (int i = 0; i < WIDTH; ++i) {
         printf("%s%c%s",CYAN, H_BORDER, RESET);
     }
+    Sleep(30);
 }
 
 static void input() {
@@ -127,6 +141,7 @@ static void logic() {
             ++snake.y;
             break;
         case STOP:
+            game_over = 1;
             break;
     }
     for (int i = 0; i < snake.tl; ++i) {
@@ -153,11 +168,5 @@ void start_game() {
     if (game_over == 1) {
         system("cls");
         printf("Game over.\nYour score: %d\n", score);
-    }
-    int play;
-    printf("Do you want to play again? (1 - default yes / 0 - no):\n");
-    scanf("%d", &play);
-    if (play) {
-        start_game();
     }
 }

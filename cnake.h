@@ -23,22 +23,6 @@
 #define CYAN  "\x1b[36m"
 #define RESET "\x1b[0m"
 
-typedef struct {
-    int x, y, tl;
-    int xs[MAX], ys[MAX];
-    char head_char;
-    char body;
-    enum {STOP = 0, UP, DOWN, RIGHT, LEFT} direction;
-    } snake_struct;
-
-static snake_struct snake;
-static int fruit_x, fruit_y, game_over, score;
-static void spawn_fruit();
-static void setup();
-static void draw();
-static void input();
-static void logic();
-static void clear(int);
 void start_game();
 
 #endif //C_CNAKE_H
