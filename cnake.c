@@ -15,6 +15,7 @@ static void spawn_fruit() {
 
 static void setup() {
     snake.head_char = '^';
+    snake.direction = UP;
     for (int i = 0; i < MAX; ++i){
         snake.xs[i] = snake.ys[i] = -1;
     }
@@ -33,6 +34,7 @@ static void draw() {
     }
 
     printf("\tScore: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
+
     for (int i = 0; i < HEIGHT; ++i) {
         for (int j = 0; j < WIDTH; ++j) {
             if (j == 0 || j == WIDTH - 1) {
@@ -68,19 +70,19 @@ static void input() {
     if (_kbhit()) {
         switch (_getch()) {
             case 'w':
-                dir = UP;
+                snake.direction = UP;
                 snake.head_char = '^';
                 break;
             case 'a':
-                dir = LEFT;
+                snake.direction = LEFT;
                 snake.head_char = '<';
                 break;
             case 's':
-                dir = DOWN;
+                snake.direction = DOWN;
                 snake.head_char = 'v';
                 break;
             case 'd':
-                dir = RIGHT;
+                snake.direction = RIGHT;
                 snake.head_char = '>';
                 break;
             case 'x':
@@ -108,7 +110,7 @@ static void logic() {
         prev_x = curr_x;
         prev_y = curr_y;
     }
-    switch (dir) {
+    switch (snake.direction) {
         case LEFT:
             --snake.x;
             break;
@@ -143,6 +145,10 @@ void start_game() {
         input();
         logic();
     }
+
     system("cls");
     printf("Game over.\nYour score: %d\n",score);
+
+    printf("Do you want to play again? (1 - default yes / 0 - no):\n");
+    
 }
