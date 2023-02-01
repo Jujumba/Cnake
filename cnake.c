@@ -6,8 +6,11 @@ static void clear(int lines) {
     }
 }
 static void spawn_fruit() {
-    fruit_x = rand() % (WIDTH - 1);
-    fruit_y = rand() % (HEIGHT - 1);
+    do {
+        fruit_x = rand() % (WIDTH - 1);
+        fruit_y = rand() % (HEIGHT - 1);
+    } while (fruit_x <= 0 || fruit_y <= 0);
+
 }
 
 static void setup() {
@@ -26,19 +29,19 @@ static void setup() {
 static void draw() {
     clear(WIDTH + 2);
     for (int i = 0; i < WIDTH; ++i) {
-        wprintf(L"%c", border);
+        printf("%s%c%s",CYAN, H_BORDER, RESET);
     }
 
     printf("\tScore: %d\tFruit X: %d, Fruit Y: %d\n", score, fruit_x, fruit_y);
     for (int i = 0; i < HEIGHT; ++i) {
         for (int j = 0; j < WIDTH; ++j) {
             if (j == 0 || j == WIDTH - 1) {
-                printf("%c", border);
+                printf("%s%c%s",CYAN, V_BORDER, RESET);
             } else {
                 if (i == snake.y && j == snake.x) {
-                    printf("\x1B[34m%c\x1B[0m", snake.head_char);
+                    printf("%s%c%s",BLUE,snake.head_char, RESET);
                 } else if (i == fruit_y && j == fruit_x) {
-                    printf("$");
+                    printf("%s%c%s", GREEN, FRUIT, RESET);
                 } else {
                     int print = 0;
                     for (int k = 0; k < snake.tl; ++k) {
@@ -57,7 +60,7 @@ static void draw() {
     }
 
     for (int i = 0; i < WIDTH; ++i) {
-        printf("%c", border);
+        printf("%s%c%s",CYAN, H_BORDER, RESET);
     }
 }
 

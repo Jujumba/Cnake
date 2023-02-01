@@ -13,7 +13,16 @@
 #define WIDTH 75
 #define HEIGHT 25
 #define MAX (WIDTH * HEIGHT)
-static char32_t border = u'#'; // ▓
+
+#define FRUIT '$'
+#define H_BORDER '-'
+#define V_BORDER '|'
+#define GREEN "\x1b[32m"
+#define BLUE  "\x1b[34m"
+#define CYAN  "\x1b[36m"
+#define RESET "\x1b[0m"
+
+static char border = '#';
 
 typedef struct {
     int x, y, tl;
